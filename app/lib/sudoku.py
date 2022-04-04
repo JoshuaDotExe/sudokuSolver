@@ -93,15 +93,13 @@ class sudoku:
     def verticalNeighbours(self, xCoord: int):
         returnList = []
         for row in self.grid:
-            if row[xCoord] != "0":
-                returnList.append(row[xCoord])
+            returnList.append(row[xCoord])
         return returnList
     
     def horizontalNeighbours(self, yCoord: int):
         returnList = []
         for xValue in self.grid[yCoord]:
-            if xValue != "0":
-                returnList.append(xValue)
+            returnList.append(xValue)
         return returnList
     
     def boxNeighbours(self, yCoord: int, xCoord: int):
@@ -110,8 +108,7 @@ class sudoku:
         returnList = []
         for row in self.grid[boxCol:boxCol+3]:
             for item in row[boxRow:boxRow+3]:
-                if item != "0":
-                    returnList.append(item)
+                returnList.append(item)
         return returnList
 
     # <----------------------------------------------------------------------->
@@ -121,15 +118,13 @@ class sudoku:
     def pencilVerticalNeighbours(self, xCoord: int):
         returnList = []
         for row in self.pencilMarks:
-            if len(row[xCoord]) != 0:
-                returnList.append(row[xCoord])
+            returnList.append(row[xCoord])
         return returnList
 
     def pencilHorizontalNeighbours(self, yCoord: int):
         returnList = []
         for xValue in self.pencilMarks[yCoord]:
-            if len(xValue) != 0:
-                returnList.append(xValue)
+            returnList.append(xValue)
         return returnList
     
     def pencilBoxNeighbours(self, yCoord: int, xCoord: int):
@@ -138,8 +133,7 @@ class sudoku:
         returnList = []
         for row in self.pencilMarks[boxCol:boxCol+3]:
             for item in row[boxRow:boxRow+3]:
-                if len(item) != 0:
-                    returnList.append(item)
+                returnList.append(item)
         return returnList
     
     def pencilNeighboursDict(self, yCoord: int, xCoord: int) -> dict: 
@@ -276,6 +270,10 @@ class sudoku:
         self.pencilNakedSet()
         self.loneSingles()
         
+        self.removeBasicPencilMarks()
+        # Add check for only choice in house
+        # Add X Y swordfish by checking if the box/row/column has the same number as length of the sets 
+        # by turning the check cell into a set and checking for similar subsets, take away the subset from the cell you're checking
 
     # Checks if only one pencil mark remains 
     # if true it replaces the grid space with it

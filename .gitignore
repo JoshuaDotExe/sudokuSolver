@@ -9,3 +9,7 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 notes.txt
+
+icon_64.ico
+icon_128.ico
+icon_256.ico

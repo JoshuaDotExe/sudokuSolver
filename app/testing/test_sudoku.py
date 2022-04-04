@@ -11,7 +11,10 @@ class TestGrid(unittest.TestCase):
         self.testBlank = sudoku.loadFromJSON("_testBlank")
     
     def tearDown(self):
-        pass
+        del self.testEasy
+        del self.testMedium
+        del self.testHard
+        del self.testBlank
     
     def test_loadFromJSON(self):
         self.assertEqual(self.testEasy.grid, [['5', '0', '0', '0', '0', '6', '0', '0', '2'],
