@@ -1,5 +1,3 @@
-import os
+import app.sudoku.game as runMe
 
-cwd = os.getcwd().replace("\\", "/")
-
-exec(open(cwd + '/app/lib/window.py').read())
+runMe.main()
