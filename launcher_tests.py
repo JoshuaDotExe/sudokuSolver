@@ -4,8 +4,12 @@ from testing.test_marks import TestMarks
 from testing.test_methods import TestMethods
 
 testClasses = [TestGrid, TestMarks, TestMethods]
-testSuites = list()
+loadedTests = list()
 
-for testClass in testClasses:
-    testSuite = unittest.TestLoader().loadTestsFromTestCase(testClass)
-    testSuites.append(testSuite)
+for item in testClasses:
+    testSuite = unittest.TestLoader().loadTestsFromTestCase(item)
+    loadedTests.append(testSuite)
+
+fullSuite = unittest.TestSuite(loadedTests)
+
+unittest.TextTestRunner(verbosity=2).run(fullSuite)

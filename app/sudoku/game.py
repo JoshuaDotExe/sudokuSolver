@@ -227,7 +227,7 @@ class sudoku(markings):
                     logging.info(f"SOLVED | HIDDEN SINGLE (box)| Space ({tempX},{tempY}) is a {target}")
                     self.turnMoves += 1
         self.removeBasicMarks()
-                    
+    
     def methods(self):
         self.turnMoves = 0
         self.loneSingles()
