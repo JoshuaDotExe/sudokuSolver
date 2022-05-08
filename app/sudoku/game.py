@@ -8,23 +8,29 @@ from app.sudoku import textLogo
 
 logging.basicConfig(level=logging.DEBUG,
                     handlers=[logging.FileHandler("debug.log"),
-                              logging.StreamHandler()
-                              ]
-                    )
+                              logging.StreamHandler()])
+logging.basicConfig(level=logging.INFO,
+                    handler=[logging.FileHandler("debug.log"),
+                             logging.StreamHandler()])
+logging.basicConfig(level=logging.WARNING,
+                    handler=[logging.FileHandler("debug.log"),
+                             logging.StreamHandler()])
 
 class sudoku(markings):
     
-    def __init__(self, gameSize):
+    def __init__(self, fileName="medium"):
         
-        self.gridSize = gameSize
-        self.subgridSize = round(gameSize**0.5) # Sqrt
-        self.grid = self.buildGridJSON()
+        self.grid = self.buildGridJSON(fileName)
+        self.gridSize = len(self.grid)
+        self.subgridSize = round(self.gridSize**0.5) # Sqrt
         
         self.solved = False
         self.turnCounter = 0
         self.difficulty = 0
         
-        super().__init__(gameSize)
+        self.turnMoves = 0
+        
+        super().__init__(self.gridSize)
         self.removeBasicMarks()
 
     def __repr__(self):
@@ -109,9 +115,9 @@ class sudoku(markings):
         return printStr
     
     @staticmethod
-    def buildGridJSON():
+    def buildGridJSON(filename: str):
         cwd = os.getcwd().replace("\\", "/") 
-        targetDir = cwd + "/app/resources/premadeGames/simple.json"
+        targetDir = cwd + f"/app/resources/premadeGames/{filename}.json"
         with open(targetDir, "r") as file:
             gameGrid = json.load(file)["grid"]
         return gameGrid
@@ -143,41 +149,118 @@ class sudoku(markings):
         for yCoord, row in enumerate(self.grid):
             for xCoord, item in enumerate(row):
                 if item != '0':
-                    self.removeMarksBox(item, xCoord, yCoord)
-                    self.removeMarksHorizontal(item, yCoord)
-                    self.removeMarksVertical(item, xCoord)
+                    self.removeMarkBox(item, xCoord, yCoord)
+                    self.removeMarkHorizontal(item, yCoord)
+                    self.removeMarkVertical(item, xCoord)
                     self.marks[yCoord][xCoord] = []
     
-    # Checks if only one pencil mark remains 
+    # Checks if only one pencil mark remains in each space
     # if true it replaces the grid space with it
     def loneSingles(self):
-        notableChange = False
+        totalMoves = 0
         for yCoord, row in enumerate(self.marks):
             for xCoord, item in enumerate(row):
                 if len(item) == 1:
                     self.grid[yCoord][xCoord] = item[0]
-                    notableChange = True
-                    logging.debug(f"SOLVED: Space ({xCoord},{yCoord}) is a {item[0]}")
+                    self.turnMoves += 1
+                    logging.info(f"SOLVED | LONE SINGLE | Space ({xCoord},{yCoord}) is a {item[0]}")
         self.removeBasicMarks()
-        return notableChange
+        return totalMoves
     
+    # Checks if only one type of mark remains in each house
+    # if true it replaces the grid space with it
+    def hiddenSingles(self):
+        for xCoord in range(self.gridSize):
+            self.hiddenSinglesVertical(xCoord)
+        for yCoord in range(self.gridSize):
+            self.hiddenSinglesHorizontal(yCoord)
+        boxCoords = [element*self.subgridSize for element in list(range(self.subgridSize))]
+        print(boxCoords)
+        for xCoord in boxCoords:
+            for yCoord in boxCoords:
+                self.hiddenSinglesBox(xCoord, yCoord)
+                #pass
+        
+    def hiddenSinglesVertical(self, xCoord : int):
+        targets = list()
+        for targetNum, numerator in self.markNbrDictVertical(xCoord).items():
+            if numerator == 1:
+                targets.append(targetNum)
+        if len(targets) == 0:
+            return
+        for target in targets:
+            for yCoord, markList in enumerate(self.pencilVerticalNeighbours(xCoord)):
+                if target in markList:
+                    self.grid[yCoord][xCoord] = target
+                    logging.info(f"SOLVED | HIDDEN SINGLE (vert)| Space ({xCoord},{yCoord}) is a {target}")
+                    self.turnMoves += 1
+        self.removeBasicMarks()
+    
+    def hiddenSinglesHorizontal(self, yCoord : int):
+        targets = list()
+        for targetNum, numerator in self.markNbrDictHorizontal(yCoord).items():
+            if numerator == 1:
+                targets.append(targetNum)
+        if len(targets) == 0:
+            return
+        for target in targets:
+            for xCoord, markList in enumerate(self.pencilHorizontalNeighbours(yCoord)):
+                if target in markList:
+                    self.grid[yCoord][xCoord] = target
+                    logging.info(f"SOLVED | HIDDEN SINGLE (horz)| Space ({xCoord},{yCoord}) is a {target}")
+                    self.turnMoves += 1
+        self.removeBasicMarks()
+    
+    def hiddenSinglesBox(self, xCoord : int, yCoord : int):
+        targets = list()
+        for targetNum, numerator in self.markNbrDictBox(xCoord, yCoord).items():
+            if numerator == 1:
+                targets.append(targetNum)
+        if len(targets) == 0:
+            return
+        for target in targets:
+            for count, markList in enumerate(self.pencilBoxNeighbours(yCoord, xCoord)):
+                if target in markList:
+                    tempX = ((xCoord//self.subgridSize)*self.subgridSize)+count%self.subgridSize
+                    tempY = ((yCoord//self.subgridSize)*self.subgridSize)+count//self.subgridSize
+                    self.grid[tempY][tempX] = target
+                    logging.info(f"SOLVED | HIDDEN SINGLE (box)| Space ({tempX},{tempY}) is a {target}")
+                    self.turnMoves += 1
+        self.removeBasicMarks()
+                    
     def methods(self):
-        if self.loneSingles() == True:
-            pass
-        else:
+        self.turnMoves = 0
+        self.loneSingles()
+        self.hiddenSingles()
+        
+        if self.turnMoves == 0:
             self.solved = True
-            logging.debug("Game Currently Unsolvable")
-
+            logging.warning("Game Currently Unsolvable")
+            return
+        if self.solvedCheck() == True:
+            self.solved = True
+            logging.info("Game Solved")
+            print(self)
+            return
+    
+    # Iterates through grid
+    # Finds if any spaces left to solve
+    def solvedCheck(self):
+        for row in self.grid:
+            for item in row:
+                if item == "0":
+                    return False
+        return True
+    
     def runPuzzle(self):
         print(f"Running Sudoku Solver : Version # {__version__}")
-        
         print(textLogo)
         while self.solved == False:
-            print(self)  
+            print(self)
             input()
             self.methods()
         
 def main():
-    gameItem = sudoku(9)
+    gameItem = sudoku()
     gameItem.runPuzzle()
 

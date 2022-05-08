@@ -43,7 +43,31 @@ class markings:
                 returnList.append(item)
         return returnList
     
-    def pencilNeighboursDict(self, yCoord: int, xCoord: int) -> dict: 
+    def markNbrDictVertical(self, xCoord: int):
+        neighbourDict = dict.fromkeys(self.charSet, 0)
+        # Adds items in col
+        for itemList in self.pencilVerticalNeighbours(xCoord):
+            for item in itemList:
+                neighbourDict[item] += 1
+        return neighbourDict
+    
+    def markNbrDictHorizontal(self, yCoord: int):
+        neighbourDict = dict.fromkeys(self.charSet, 0)
+        # Adds item in row
+        for itemList in self.pencilHorizontalNeighbours(yCoord):
+            for item in itemList:
+                neighbourDict[item] += 1
+        return neighbourDict
+    
+    def markNbrDictBox(self, xCoord: int, yCoord: int):
+        neighbourDict = dict.fromkeys(self.charSet, 0)
+        # Adds items in box
+        for itemList in self.pencilBoxNeighbours(yCoord, xCoord):
+            for item in itemList:
+                neighbourDict[item] += 1
+        return neighbourDict
+    
+    def markNbrDictXYBox(self, xCoord: int, yCoord: int) -> dict: 
         neighbourDict = dict.fromkeys(self.charSet, 0)
             
         # Adds item in row
@@ -100,21 +124,21 @@ class markings:
         
         return neighbourSet
         
-    def removeMarksVertical(self, target: str, xCoord: int):
+    def removeMarkVertical(self, target: str, xCoord: int):
         for row in self.marks:
             try:
                 row[xCoord].remove(target)
             except ValueError:
                 pass
     
-    def removeMarksHorizontal(self, target: str, yCoord: int):
+    def removeMarkHorizontal(self, target: str, yCoord: int):
         for item in self.marks[yCoord]:
             try:
                 item.remove(target)
             except ValueError:
                 pass
     
-    def removeMarksBox(self, target: str, xCoord: int, yCoord: int):
+    def removeMarkBox(self, target: str, xCoord: int, yCoord: int):
         boxRow = (yCoord//3)*3
         boxCol = (xCoord//3)*3
         for row in self.marks[boxRow:boxRow+3]:
