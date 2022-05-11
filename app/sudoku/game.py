@@ -226,24 +226,6 @@ class sudoku(markings):
                     markElim = True
         return markElim
     
-    # @staticmethod
-    # def nakedSetsCheckSets(marksHouseCopy: list):
-    #     # Removes all empty spaces to make it easier to search for valid naked sets
-    #     sortedHouse = list(filter(lambda houseItem: len(houseItem) != 0, marksHouseCopy))
-    #     # Creates a set of items which grows at x*len(sortedHouse)
-    #     # to contain a list of all possible combinations
-    #     baseSets = [set(item) for item in sortedHouse]
-    #     checkSets = []
-    #     for markNum, markSet in enumerate(baseSets):
-    #         for adjustIndex in range(len(sortedHouse)):
-    #             if markNum == adjustIndex: continue
-    #             markSetCopy = deepcopy(markSet)
-    #             markSetCopy.update(set(sortedHouse[(markNum+adjustIndex)%len(sortedHouse)]))
-    #             checkSets.append(markSetCopy)
-    #     frozenSets = [frozenset(item) for item in checkSets]
-    #     checkSets = [set(item) for item in list(set(frozenSets))]
-    #     return checkSets
-    
     @staticmethod
     def nakedSetsDictBuilder(marksHouse: list):
         # Removes all empty spaces to make it easier to search for valid naked sets
@@ -290,61 +272,6 @@ class sudoku(markings):
                     logging.info(f'SOLVED | NAKED SET ({logDesc})| {tuple(setItem)} found at {f"X = {x}" if x >= 0 else ""}{" , " if x >= 0 and y >= 0 else ""}{f"Y = {y}" if y >= 0 else ""}')
                     return True
         return False
-    
-    # def nakedSetsVert(self, xCoord: int):
-    #     marksHouse = self.pencilVerticalNeighbours(xCoord)
-    #     marksHouseCopy = deepcopy(marksHouse)
-    #     # Quick non comprehensive test if the house has been fully solved
-    #     # running the solver with an item length of 3 also causes it to
-    #     # see a naked pair when it's actually an unsolvable group of 3
-    #     if all(len(item) <= 3 for item in marksHouseCopy): return False
-    #     # Returns if the set that remains solves nothing, ie it's the last thing that remains
-    #     checkSets = self.nakedSetsCheckSets(marksHouseCopy)
-    #     if len(checkSets) == 1: return False
-    #     # Only looks for pairs, triples and quads, no quints
-    #     for numSet in (2, 3, 4):
-    #         for checkSet in checkSets:
-    #             if len(checkSet) == numSet:
-    #                 if self.nakedSetsEliminator(marksHouse, checkSet) == True:
-    #                     self.turnMoves += 1
-    #                     logging.info(f'SOLVED | NAKED SET (vert)| {checkSet} found at X = {xCoord}')
-    #                     return True
-    #     return False
-                        
-    # def nakedSetsHorz(self, yCoord: int):
-    #     marksHouse = self.pencilHorizontalNeighbours(yCoord)
-    #     marksHouseCopy = deepcopy(marksHouse)
-    #     if all(len(item) <= 3 for item in marksHouseCopy):
-    #         return
-    #     checkSets = self.nakedSetsCheckSets(marksHouseCopy)
-    #     if len(checkSets) == 1:
-    #         return
-    #     for numSet in (2, 3, 4):
-    #         for checkSet in checkSets:
-    #             if len(checkSet) == numSet:
-    #                 if self.nakedSetsEliminator(marksHouse, checkSet) == True:
-    #                     self.turnMoves += 1
-    #                     logging.info(f'SOLVED | NAKED SET (horz)| {checkSet} found at Y = {yCoord}')
-    #                     return True
-    #     return False
-    
-    # def nakedSetsBox(self, xCoord: int, yCoord: int):
-    #     marksHouse = self.pencilBoxNeighbours(yCoord, xCoord)
-    #     marksHouseCopy = deepcopy(marksHouse)
-    #     if all(len(item) <= 3 for item in marksHouseCopy):
-    #         return False
-    #     checkSets = self.nakedSetsCheckSets(marksHouseCopy)
-    #     if len(checkSets) == 1:
-    #         return False
-    #     for numSet in (2, 3, 4):
-    #         for checkSet in checkSets:
-    #             if len(checkSet) == numSet:
-    #                 if self.nakedSetsEliminator(marksHouse, checkSet) == True:
-    #                     self.turnMoves += 1
-    #                     logging.info(f'SOLVED | NAKED SET (box)| {checkSet} found at X = {xCoord}, Y = {yCoord}')
-    #                     return True
-    #     return False
-    
     
     def methods(self):
         self.turnCounter += 1
