@@ -124,26 +124,29 @@ class markings:
         
         return neighbourSet
         
-    def removeMarkVertical(self, target: str, xCoord: int):
-        for row in self.marks:
-            try:
-                row[xCoord].remove(target)
-            except ValueError:
-                pass
+    def removeMarkVertical(self, targets: list, xCoord: int):
+        for target in targets:
+            for row in self.marks:
+                try:
+                    row[xCoord].remove(target)
+                except ValueError:
+                    pass
     
-    def removeMarkHorizontal(self, target: str, yCoord: int):
-        for item in self.marks[yCoord]:
-            try:
-                item.remove(target)
-            except ValueError:
-                pass
-    
-    def removeMarkBox(self, target: str, xCoord: int, yCoord: int):
-        boxRow = (yCoord//3)*3
-        boxCol = (xCoord//3)*3
-        for row in self.marks[boxRow:boxRow+3]:
-            for item in row[boxCol:boxCol+3]:
+    def removeMarkHorizontal(self, targets: list, yCoord: int):
+        for target in targets:
+            for item in self.marks[yCoord]:
                 try:
                     item.remove(target)
                 except ValueError:
                     pass
+    
+    def removeMarkBox(self, targets: list, xCoord: int, yCoord: int):
+        for target in targets:
+            boxRow = (yCoord//3)*3
+            boxCol = (xCoord//3)*3
+            for row in self.marks[boxRow:boxRow+3]:
+                for item in row[boxCol:boxCol+3]:
+                    try:
+                        item.remove(target)
+                    except ValueError:
+                        pass
