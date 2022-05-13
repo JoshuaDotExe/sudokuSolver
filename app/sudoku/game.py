@@ -312,12 +312,15 @@ class sudoku(markings):
     def pointingSets(self):
         for xCoord in range(self.gridSize):
             self.pointingSetsVert(xCoord)
+            pass
         for yCoord in range(self.gridSize):
             self.pointingSetsHorz(yCoord)
+            pass
         boxCoords = [element*self.subgridSize for element in list(range(self.subgridSize))]
         for xCoord in boxCoords:
             for yCoord in boxCoords:
                 self.pointingSetsBox(xCoord, yCoord)
+                pass
     
     def pointingSetsEliminator(self, target: str, targetBL: list, marksHouse: list):
         notableChange = False
@@ -406,12 +409,13 @@ class sudoku(markings):
                 if markKey not in markSpace:
                     continue
                 targetList.append(markIndex)
-            floorBase = targetList[0]//self.subgridSize
-            if all(item//self.gridSize == floorBase for item in targetList) == False:
+            floorBase = (targetList[0]//self.subgridSize)*self.subgridSize
+            if all(item//self.subgridSize == floorBase for item in targetList) == False:
                 continue
             blackList = [item for item in range(floorBase, floorBase+self.subgridSize)]
             if self.pointingSetsEliminator(markKey, blackList, self.pencilBoxNeighbours(y, targetList[0])) == False:
                 continue
+            self.pencilBoxNeighbours(y, targetList[0])
             self.turnMoves += 1
             logging.info(f'SOLVED | POINTING SET (horz) | {markKey} found in row {y} in spaces{tuple(f" ({item}, {y})" for item in targetList)}')
     
@@ -428,6 +432,7 @@ class sudoku(markings):
         if self.turnMoves == 0:
             self.solved = True
             logging.warning("Game Currently Unsolvable")
+            print(self)
             return
         if self.solvedCheck() == True:
             self.solved = True
@@ -449,7 +454,9 @@ class sudoku(markings):
         print(textLogo)
         print(self)
         while self.solved == False:
+            input()
             self.methods()
+            print(self)
         
 def main():
     
