@@ -7,10 +7,10 @@ class TestGrid(unittest.TestCase):
     
     def setUp(self):
         logging.disable(logging.CRITICAL)
-        self.testEasy = sudoku("_testEasy")
-        self.testMedium = sudoku("_testMedium")
-        self.testHard = sudoku("_testHard")
-        self.testBlank = sudoku("_testBlank")
+        self.testEasy = sudoku.buildGridJSON("_testEasy")
+        self.testMedium = sudoku.buildGridJSON("_testMedium")
+        self.testHard = sudoku.buildGridJSON("_testHard")
+        self.testBlank = sudoku.buildGridJSON("_testBlank")
     
     def tearDown(self):
         del self.testEasy
