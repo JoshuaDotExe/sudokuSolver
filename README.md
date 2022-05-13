@@ -29,11 +29,14 @@ A naked single refers to a __single__ space where, if you had enough time to mar
 ### __Hidden__ ___Single___  __:__
 A hidden single refers to a __single__ space where its pencil marks contain the only instance of a mark within its entire house, meaning for that row/column/box it is the only possible space for that mark to appear. What differs this from the naked single method is the mark is not going to be the only mark assigned to that space. The right mark will be "hidden" beneath other marks that can't be eliminated as a candidate by other means.
 
-### __Naked__ __Pair / Triple / Quad__ __:__
+### __Pointing__ ___Pair / Triple___ __:__
+A pointing set is a grouping of a single mark spread over two or three spaces in a box that belong to the same row or column. This means that the mark has to be in one of those spaces and can be removed from the rest of the row/column. However it's also true where a grouping of a single mark spread over two or three spaces in a column that are the only occurances of said mark in said column, along with being contained in the same subgrid. Where the mark can be removed from the rest of the subgrid as that mark can only occur in those spaces within the subgrid.
+
+### __Naked__ ___Pair / Triple / Quad___ __:__
 A naked pair/triple/quad refers to a __group__ of spaces within a house, where they're are all a part of a set of marks that can only appear in those spaces. Meaning you can eliminate that set of marks from appearing in the rest of the house. The marks are assured to appear in those specific spaces if they're all a subset of a set containing all numbers within the marks of the spaces and that the set is no greater in size than the number of spaces being included.
 
-### __Hidden__ __Pair / Triple/ Quad__ __:__
-A hidden pair/triple/quad is very similar to its' the naked variants of the same name, however like the hidden single the pair/triple/quad the wanted marks are buried and "hidden" beneath other marks that can't be eliminated by using any other means. These marks that are hiding the pair/triple/quad underneath can be discarded. This method often works in conjunction with the naked pair/triple/quad method eliminate a great number of pencil marks from the harder difficulty puzzles.
+### __Hidden__ ___Pair / Triple/ Quad___ __:__
+A hidden pair/triple/quad is very similar to the naked variants of the same name, however like the hidden single the pair/triple/quad the wanted marks are buried and "hidden" beneath other marks that can't be eliminated by using any other means. These marks that are hiding the pair/triple/quad underneath can be discarded. This method often works in conjunction with the naked pair/triple/quad method eliminate a great number of pencil marks from the harder difficulty puzzles.
 
 ### __XWing, XYWing, XYZWing :__
     Insert Context
