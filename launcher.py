@@ -1,3 +1,3 @@
-import app.sudoku.game as runMe
+import app.run as runMe
 
 runMe.main()
