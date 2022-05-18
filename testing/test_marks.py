@@ -1,7 +1,7 @@
 import unittest
 import logging
 
-from app.sudoku.game import sudoku
+from src.app.game import sudoku
 
 class TestMarks(unittest.TestCase):
     

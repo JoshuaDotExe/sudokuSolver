@@ -1,6 +1,6 @@
 import logging
 
-from app.sudoku.lib.base import base
+from src.app.lib.base import base
 
 class nakedSingles:
     # Checks if only one pencil mark remains in each space

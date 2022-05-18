@@ -1,4 +1,4 @@
-from app.sudoku.lib.pencilMarks import markings
+from src.app.lib.pencilMarks import markings
 
 class base(markings):
     def __init__(self, gameGrid):

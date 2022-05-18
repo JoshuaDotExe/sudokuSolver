@@ -1,6 +1,6 @@
 import logging
 
-from app.sudoku.lib.base import base
+from src.app.lib.base import base
 
 class pointingSets:
     def solvePointingSets(self: base):
@@ -87,7 +87,7 @@ class pointingSets:
             if pointingSets.__pointingSetsEliminator(markKey, blackList, self.pencilBoxNeighbours(targetList[0], x)) == False:
                 continue
             self.turnMoves += 1
-            logging.info(f'SOLVED | POINTING SET (vert) | {markKey} found in column {x} in spaces {tuple(f"({x}, {item})" for item in targetList)}')
+            logging.info(f'SOLVED | POINTING SET (vert) | {markKey} found in column {x} in spaces {tuple((x, item) for item in targetList)}')
     
     @staticmethod
     def __pointingSetsHorz(self: base, y: int):
@@ -98,7 +98,7 @@ class pointingSets:
         for markSpace in marksHouse:
             for item in markSpace:
                 markDict[item] += 1
-                
+        
         for markKey, markVal in markDict.items():
             if markVal > self.subgridSize or markVal < 2:
                 continue
@@ -107,12 +107,13 @@ class pointingSets:
                 if markKey not in markSpace:
                     continue
                 targetList.append(markIndex)
-            floorBase = (targetList[0]//self.subgridSize)*self.subgridSize
+            floorBase = targetList[0]//self.subgridSize
             if all(item//self.subgridSize == floorBase for item in targetList) == False:
                 continue
-            blackList = [item for item in range(floorBase, floorBase+self.subgridSize)]
+            blackList = [item for item in range((y%self.subgridSize)*self.subgridSize, (y%self.subgridSize)*self.subgridSize+self.subgridSize)]
             if pointingSets.__pointingSetsEliminator(markKey, blackList, self.pencilBoxNeighbours(y, targetList[0])) == False:
                 continue
+            
             self.pencilBoxNeighbours(y, targetList[0])
             self.turnMoves += 1
-            logging.info(f'SOLVED | POINTING SET (horz) | {markKey} found in row {y} in spaces{tuple(f" ({item}, {y})" for item in targetList)}')
+            logging.info(f'SOLVED | POINTING SET (horz) | {markKey} found in row {y} in spaces {tuple((item, y) for item in targetList)}')

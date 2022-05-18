@@ -1,7 +1,7 @@
 import logging
 from copy import deepcopy
 
-from app.sudoku.lib.base import base
+from src.app.lib.base import base
 
 class nakedHidden:
     def solveNakedHiddenSets(self: base):

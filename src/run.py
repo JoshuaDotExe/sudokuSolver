@@ -2,14 +2,15 @@ import logging
 import time
 from copy import deepcopy
 
-from app.sudoku.game import sudoku
+from src.app.game import sudoku
 
-from app import __version__
-from app.sudoku import textLogo
+from src import __version__
+from src.app import textLogo
 
 
 
 def startUp():
+    print(f"Running Sudoku Solver : Version # {__version__}")
     logging.basicConfig(level=logging.DEBUG,
                     handlers=[logging.FileHandler("debug.log"),
                               logging.StreamHandler()])
@@ -22,13 +23,13 @@ def startUp():
     logging.basicConfig(level=logging.CRITICAL,
                         handler=[logging.FileHandler("debug.log"),
                                 logging.StreamHandler()])
-    print(f"Running Sudoku Solver : Version # {__version__}")
-    
     return True
+
 def runPuzzle(puzzle: sudoku):
     print(textLogo)
-    print(puzzle)
+    
     while puzzle.solved == False:
+        print(puzzle)
         input()
         puzzle.methods()
         if puzzle.turnMoves == 0:
@@ -59,7 +60,8 @@ def runTimedPuzzle(puzzle: sudoku):
             
     print(f'Games Finished = {counter}\nFinished in {(time.time()-startTime)} seconds')
 def main():
-    print(dir(sudoku))
+    startUp()
     gameItem = sudoku.buildGridStr(input('Please enter a game string : '))
     runPuzzle(gameItem)
     #runTimedPuzzle(gameItem)
+    #94..2..38...418..............7.8.5...6.1.3.4...5.6.2..............231...21..4..96

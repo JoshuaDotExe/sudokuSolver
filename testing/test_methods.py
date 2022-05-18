@@ -1,7 +1,7 @@
 import unittest
 import logging
 
-from app.sudoku.game import sudoku
+from src.app.game import sudoku
 
 class TestMethods(unittest.TestCase):
     
@@ -475,5 +475,8 @@ class TestMethods(unittest.TestCase):
             [['1','2','3','4','5','6','7','8','9'],['1','2','3','4','5','6','7','8','9'],['1','2','3','4','5','6','7','8','9'],['1','2','3','4','5','6','7','8','9'],['1','2','3','4','5','6','7','8','9'],['1','2','3','4','5','6','7','8','9'],['1','2','3','4','5','6','7','8','9'],['1','2','3','4','5','6','7','8','9'],['1','2','3','4','5','6','7','8','9']]
         ]
         self.assertEqual(self.testBlank.marks, p1)
+        
+    def test_xWingVert(self):
+        self.testBlank.removeMarkVertical('1')
     
     

@@ -1,6 +1,6 @@
 import logging
 
-from app.sudoku.lib.base import base
+from src.app.lib.base import base
 
 class hiddenSingles:
     # Checks if only one type of mark remains in each house

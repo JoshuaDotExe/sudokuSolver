@@ -1,3 +1,3 @@
-import app.run as runMe
+import src.run as runMe
 
 runMe.main()
