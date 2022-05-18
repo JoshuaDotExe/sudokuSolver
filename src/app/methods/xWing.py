@@ -22,6 +22,7 @@ class xWing:
                     y = [yCoord, checkY]
                     if any([xWing.__Elim(self.pencilVerticalNeighbours(x[item]), mark, y) for item in (0, 1)]) == False: continue
                     logging.info(f"SOLVED | X-Wing (vert) | {mark} found in spaces ({x[0]},{y[0]}), ({x[1]},{y[0]}), ({x[0]},{y[1]}), ({x[1]},{y[1]})")
+                    self.turnMoves += 1
                     return
     
     @staticmethod
@@ -39,6 +40,7 @@ class xWing:
                     x = [xCoord, checkX]
                     if any([xWing.__Elim(self.pencilHorizontalNeighbours(y[item]), mark, x) for item in (0, 1)]) == False: continue
                     logging.info(f"SOLVED | X-Wing (horz) | {mark} found in spaces ({x[0]},{y[0]}), ({x[1]},{y[0]}), ({x[0]},{y[1]}), ({x[1]},{y[1]})")
+                    self.turnMoves += 1
                     return
     
     # Used to find the location in a house of the two target items
