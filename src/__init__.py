@@ -1,5 +1,7 @@
 import logging
+from os import getcwd
 
+CWD = getcwd()
 __version__ = "0.1.2"
 
 

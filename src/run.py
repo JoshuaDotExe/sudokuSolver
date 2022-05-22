@@ -4,6 +4,8 @@ from copy import deepcopy
 
 from src.app.game import sudoku
 
+from src.window.lib.logWidget import logWidget
+
 from src import __version__
 from src.app import textLogo
 
@@ -13,16 +15,8 @@ def startUp():
     print(f"Running Sudoku Solver : Version # {__version__}")
     logging.basicConfig(level=logging.DEBUG,
                     handlers=[logging.FileHandler("logging/debug.log"),
-                              logging.StreamHandler()])
-    logging.basicConfig(level=logging.INFO,
-                        handler=[logging.FileHandler("logging/info.log"),
-                                logging.StreamHandler()])
-    logging.basicConfig(level=logging.WARNING,
-                        handler=[logging.FileHandler("logging/debug.log"),
-                                logging.StreamHandler()])
-    logging.basicConfig(level=logging.CRITICAL,
-                        handler=[logging.FileHandler("logging/debug.log"),
-                                logging.StreamHandler()])
+                              logging.StreamHandler(),
+                              logWidget()])
     return True
 
 def runPuzzle(puzzle: sudoku):

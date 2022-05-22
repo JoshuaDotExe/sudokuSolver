@@ -1,3 +1,5 @@
-import src.run as runMe
+import src.run as runMeCMD
+import src.window.main as runMeGUI
 
-runMe.main()
+#runMeCMD.main()
+runMeGUI.main()
