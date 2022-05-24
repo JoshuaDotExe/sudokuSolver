@@ -1,6 +1,5 @@
-import logging
-
 from src.app.lib.base import base
+from src import LOGSOLVE
 
 class hiddenSingles:
     # Checks if only one type of mark remains in each house
@@ -27,7 +26,7 @@ class hiddenSingles:
             for yCoord, markList in enumerate(self.pencilVerticalNeighbours(xCoord)):
                 if target in markList:
                     self.grid[yCoord][xCoord] = target
-                    logging.info(f"SOLVED | HIDDEN SINGLE (vert)| Space ({xCoord},{yCoord}) is a {target}")
+                    LOGSOLVE.info(f"HIDDEN SINGLE (vert)| Space ({xCoord},{yCoord}) is a {target}")
                     self.turnMoves += 1
         self.removeBasicMarks()
     
@@ -43,7 +42,7 @@ class hiddenSingles:
             for xCoord, markList in enumerate(self.pencilHorizontalNeighbours(yCoord)):
                 if target in markList:
                     self.grid[yCoord][xCoord] = target
-                    logging.info(f"SOLVED | HIDDEN SINGLE (horz)| Space ({xCoord},{yCoord}) is a {target}")
+                    LOGSOLVE.info(f"HIDDEN SINGLE (horz) | Space ({xCoord},{yCoord}) is a {target}")
                     self.turnMoves += 1
         self.removeBasicMarks()
     
@@ -61,6 +60,6 @@ class hiddenSingles:
                     tempX = ((xCoord//self.subgridSize)*self.subgridSize)+count%self.subgridSize
                     tempY = ((yCoord//self.subgridSize)*self.subgridSize)+count//self.subgridSize
                     self.grid[tempY][tempX] = target
-                    logging.info(f"SOLVED | HIDDEN SINGLE (box)| Space ({tempX},{tempY}) is a {target}")
+                    LOGSOLVE.info(f"HIDDEN SINGLE (box) | Space ({tempX},{tempY}) is a {target}")
                     self.turnMoves += 1
         self.removeBasicMarks()

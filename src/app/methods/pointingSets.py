@@ -1,6 +1,5 @@
-import logging
-
 from src.app.lib.base import base
+from src import LOGSOLVE
 
 class pointingSets:
     def solvePointingSets(self: base):
@@ -54,12 +53,12 @@ class pointingSets:
             if all(item[0] == targetList[0][0] for item in targetList) == True:
                 if pointingSets.__pointingSetsEliminator(markKey, [item[1] for item in targetList], self.pencilVerticalNeighbours(tempX)):
                     self.turnMoves += 1
-                    logging.info(f'SOLVED | POINTING SET (box-vert) | {markKey} found in column {targetList[0][0]} in spaces {tuple(item for item in targetList)}')
+                    LOGSOLVE.info(f'POINTING SET (box-vert) | {markKey} found in column {targetList[0][0]} in spaces {tuple(item for item in targetList)}')
                     
             elif all(item[1] == targetList[0][1] for item in targetList) == True:
                 if pointingSets.__pointingSetsEliminator(markKey, [item[0] for item in targetList], self.pencilHorizontalNeighbours(tempY)):
                     self.turnMoves += 1
-                    logging.info(f'SOLVED | POINTING SET (box-horz) | {markKey} found in row {targetList[0][1]} in spaces {tuple(item for item in targetList)}')
+                    LOGSOLVE.info(f'POINTING SET (box-horz) | {markKey} found in row {targetList[0][1]} in spaces {tuple(item for item in targetList)}')
     
     @staticmethod
     def __pointingSetsVert(self: base, x: int):
@@ -87,7 +86,7 @@ class pointingSets:
             if pointingSets.__pointingSetsEliminator(markKey, blackList, self.pencilBoxNeighbours(targetList[0], x)) == False:
                 continue
             self.turnMoves += 1
-            logging.info(f'SOLVED | POINTING SET (vert) | {markKey} found in column {x} in spaces {tuple((x, item) for item in targetList)}')
+            LOGSOLVE.info(f'POINTING SET (vert) | {markKey} found in column {x} in spaces {tuple((x, item) for item in targetList)}')
     
     @staticmethod
     def __pointingSetsHorz(self: base, y: int):
@@ -116,4 +115,4 @@ class pointingSets:
             
             self.pencilBoxNeighbours(y, targetList[0])
             self.turnMoves += 1
-            logging.info(f'SOLVED | POINTING SET (horz) | {markKey} found in row {y} in spaces {tuple((item, y) for item in targetList)}')
+            LOGSOLVE.info(f'POINTING SET (horz) | {markKey} found in row {y} in spaces {tuple((item, y) for item in targetList)}')

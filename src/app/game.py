@@ -22,6 +22,7 @@ class sudoku(base, nakedSingles, hiddenSingles, nakedHidden, pointingSets, xWing
         if self.turnMoves == 0: self.solvePointingSets()
         if self.turnMoves == 0: self.solveNakedHiddenSets()
         if self.turnMoves == 0: self.solveXWing()
+        self.removeBasicMarks()
         
     # Iterates through grid
     # Finds if any spaces left to solve

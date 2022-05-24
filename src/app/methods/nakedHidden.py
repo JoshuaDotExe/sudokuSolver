@@ -1,7 +1,7 @@
-import logging
 from copy import deepcopy
 
 from src.app.lib.base import base
+from src import LOGSOLVE
 
 class nakedHidden:
     def solveNakedHiddenSets(self: base):
@@ -59,6 +59,7 @@ class nakedHidden:
         # Returns a dict of all possible mark combinations
         possibleSets = nakedHidden.__NHSetsDictBuilder(marksHouseCopy)
         # If there's only one grouping of marks the solver is useless
+        logSetID = {2:'Pair', 3:'Triple', 4:'Quad'}
         for setItem in possibleSets.keys():
             for markItem in marksHouseCopy:
                 if markItem == []: continue
@@ -71,7 +72,7 @@ class nakedHidden:
                     if nakedHidden.__NHSetsEliminator(marksHouse, setItem) == False:
                         continue
                     self.turnMoves += 1
-                    logging.info(f'SOLVED | NAKED SET ({logDesc}) | {tuple(setItem)} found at {f"X = {x}" if x >= 0 else ""}{" , " if x >= 0 and y >= 0 else ""}{f"Y = {y}" if y >= 0 else ""}')
+                    LOGSOLVE.info(f'NAKED {logSetID[len(setItem)]} ({logDesc}) | {tuple(setItem)} found at {f"X = {x}" if x >= 0 else ""}{" , " if x >= 0 and y >= 0 else ""}{f"Y = {y}" if y >= 0 else ""}')
                     return True
         # Looks for hidden pairs, triples and quads
         for numSet in (7, 6, 5):
@@ -81,6 +82,6 @@ class nakedHidden:
                         continue
                     invertedSetItem = set(max(possibleSets.keys(), key=len)).difference(setItem)
                     self.turnMoves += 1
-                    logging.info(f'SOLVED | HIDDEN SET ({logDesc}) | {tuple(invertedSetItem)} found at {f"X = {x}" if x >= 0 else ""}{" , " if x >= 0 and y >= 0 else ""}{f"Y = {y}" if y >= 0 else ""}')
+                    LOGSOLVE.info(f'HIDDEN {logSetID[len(invertedSetItem)]} ({logDesc}) | {tuple(invertedSetItem)} found at {f"X = {x}" if x >= 0 else ""}{" , " if x >= 0 and y >= 0 else ""}{f"Y = {y}" if y >= 0 else ""}')
                     return True
         return False

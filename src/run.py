@@ -15,8 +15,17 @@ def startUp():
     print(f"Running Sudoku Solver : Version # {__version__}")
     logging.basicConfig(level=logging.DEBUG,
                     handlers=[logging.FileHandler("logging/debug.log"),
-                              logging.StreamHandler(),
-                              logWidget()])
+                              logging.StreamHandler()
+                              ])
+    logging.basicConfig(level=logging.INFO,
+                        handler=[logging.FileHandler("logging/info.log"),
+                                logging.StreamHandler()])
+    logging.basicConfig(level=logging.WARNING,
+                        handler=[logging.FileHandler("logging/debug.log"),
+                                logging.StreamHandler()])
+    logging.basicConfig(level=logging.CRITICAL,
+                        handler=[logging.FileHandler("logging/debug.log"),
+                                logging.StreamHandler()])
     return True
 
 def runPuzzle(puzzle: sudoku):
