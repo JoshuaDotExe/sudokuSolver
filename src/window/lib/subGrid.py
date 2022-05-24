@@ -37,4 +37,13 @@ class subGrid(tk.Frame):
                 continue
             if newGrid == '0':
                 self.labelList[itemIndex].config(text=self.buildMarkLabelStr(markBox[itemIndex]))
+    
+    def updateNew(self, gridBox, markBox):
+        self.gridCheck = gridBox
+        self.markCheck = markBox
+        for itemIndex, newGrid in enumerate(gridBox):
+            if newGrid != '0':
+                self.labelList[itemIndex].config(text=newGrid, font=("Helvetica", "20"), fg='blue', width=4, height=2)
+                continue
+            self.labelList[itemIndex].config(fg='black', text=self.buildMarkLabelStr(markBox[itemIndex]), width=8, height=4, font=("courier", "10"))
             

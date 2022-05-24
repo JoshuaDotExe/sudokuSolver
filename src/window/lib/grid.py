@@ -24,3 +24,13 @@ class mainGrid(tk.Frame):
                 markNbr = game.pencilBoxNeighbours(boxY, boxX)
                 self.subGridList[count].update(gridNbr, markNbr)
                 count += 1
+    
+    def updateNew(self, game):
+        boxCoords = [element*game.subgridSize for element in list(range(game.subgridSize))]
+        count = 0
+        for boxY in boxCoords:
+            for boxX in boxCoords:
+                gridNbr = game.boxNeighbours(boxY, boxX)
+                markNbr = game.pencilBoxNeighbours(boxY, boxX)
+                self.subGridList[count].updateNew(gridNbr, markNbr)
+                count += 1

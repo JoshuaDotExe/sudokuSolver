@@ -1,5 +1,5 @@
 from src.app.lib.base import base
-from src import LOGSOLVE
+from src import LOGSOLVE, LOGDEBUG
 
 class nakedSingles:
     # Checks if only one pencil mark remains in each space

@@ -1,5 +1,5 @@
 from src.app.lib.base import base
-from src import LOGSOLVE
+from src import LOGSOLVE, LOGDEBUG
 
 class hiddenSingles:
     # Checks if only one type of mark remains in each house

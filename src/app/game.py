@@ -9,7 +9,7 @@ from src.app.methods.nakedHidden import nakedHidden
 from src.app.methods.pointingSets import pointingSets
 from src.app.methods.xWing import xWing
 
-from src.app import textLogo
+from src import LOGDEBUG, LOGSOLVE
 
 class sudoku(base, nakedSingles, hiddenSingles, nakedHidden, pointingSets, xWing):
     def methods(self):
@@ -46,8 +46,7 @@ class sudoku(base, nakedSingles, hiddenSingles, nakedHidden, pointingSets, xWing
         strLength = len(inputStr)
         strSqrt = round(strLength**0.5)
         if strLength not in (16, 81, 256):
-            logging.critical('Board size not supported')
-            exit(ValueError)
+            LOGDEBUG.critical('Board size not supported')
         counter = 0
         gameGrid = []
         for _ in range(strSqrt):
@@ -60,3 +59,32 @@ class sudoku(base, nakedSingles, hiddenSingles, nakedHidden, pointingSets, xWing
             counter += strSqrt
             gameGrid.append(tempList)
         return sudoku(gameGrid)
+    
+    def solveOnce(self):
+        LOGSOLVE.info('Running single method...')
+        self.methods()
+        if self.turnMoves == 0:
+            self.solved = True
+            LOGSOLVE.warning("Game Currently Unsolvable")
+            LOGDEBUG.warning('Required method not available')
+            return True
+        elif self.solvedCheck() == True:
+            self.solved = True
+            LOGSOLVE.info("Game Solved")
+            return True
+        return False
+    
+    def solveFull(self):
+        LOGSOLVE.info('Running methods to completion...')
+        while self.solved == False:
+            self.methods()
+            if self.turnMoves == 0:
+                self.solved = True
+                LOGSOLVE.warning("Game Currently Unsolvable")
+                LOGDEBUG.warning('Required method not available')
+            if self.solvedCheck() == True:
+                self.solved = True
+                LOGSOLVE.info("Game Solved")
+        
+        
+        

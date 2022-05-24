@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 from src.app.lib.base import base
-from src import LOGSOLVE
+from src import LOGSOLVE, LOGDEBUG
 
 class nakedHidden:
     def solveNakedHiddenSets(self: base):
