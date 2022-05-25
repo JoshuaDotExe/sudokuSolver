@@ -15,14 +15,14 @@ class mainGrid(tk.Frame):
                 self.subGridList.append(tempItem)
                 tempItem.grid(row=gridY, column=gridX, padx=1, pady=1)
     
-    def update(self, game):
+    def update(self, game, solveHL=True):
         boxCoords = [element*game.subgridSize for element in list(range(game.subgridSize))]
         count = 0
         for boxY in boxCoords:
             for boxX in boxCoords:
                 gridNbr = game.boxNeighbours(boxY, boxX)
                 markNbr = game.pencilBoxNeighbours(boxY, boxX)
-                self.subGridList[count].update(gridNbr, markNbr)
+                self.subGridList[count].update(gridNbr, markNbr, solveHL)
                 count += 1
     
     def updateNew(self, game):

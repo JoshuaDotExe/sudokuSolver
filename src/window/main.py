@@ -77,14 +77,16 @@ class mainWindow(tk.Tk):
     def runFull(self):
         self.disableButtons([self.fullSolveButton, self.partSolveButton])
         self.game.solveFull()
-        self.mainGrid.update(self.game)
+        self.mainGrid.update(self.game, solveHL=False)
     
     def runOnce(self):
         self.disableButtons([self.fullSolveButton, self.partSolveButton])
         returnVal = self.game.solveOnce()
-        self.mainGrid.update(self.game)
         # Keeps the buttons disabled if the sudoku has been solved
-        if returnVal == True: return
+        if returnVal == True: 
+            self.mainGrid.update(self.game, solveHL=False)
+            return
+        self.mainGrid.update(self.game)
         self.enableButtons([self.fullSolveButton, self.partSolveButton])
         
     def insertNewGame(self):
