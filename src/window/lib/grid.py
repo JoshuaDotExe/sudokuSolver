@@ -6,7 +6,8 @@ class mainGrid(tk.Frame):
     def __init__(self, parent):
         self.subGridList = []
         boxCoords = [element*parent.game.subgridSize for element in list(range(parent.game.subgridSize))]
-        super().__init__(parent, bg='#181818', borderwidth=4, relief=tk.RAISED)
+        super().__init__(parent, bg='#181818', borderwidth=4, relief=tk.RAISED, height='698', width='698')
+        self.grid_propagate(False)
         for gridY, boxY in enumerate(boxCoords):
             for gridX, boxX in enumerate(boxCoords):
                 gridNbr = parent.game.boxNeighbours(boxY, boxX)

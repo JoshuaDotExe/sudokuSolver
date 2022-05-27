@@ -1,29 +1,38 @@
+from distutils.debug import DEBUG
+from tarfile import PAX_FIELDS
 import tkinter as tk
 
 from src import LOGDEBUG
 
 class subGrid(tk.Frame):
     def __init__(self, container, gridBox, markBox, SQRT, charSet):
-        super().__init__(container, bg='#C0C0C0')
+        super().__init__(container, bg='#C0C0C0', width=228, height=228)
+        self.grid_propagate(False)
         self.gridCheck = gridBox
         self.charSet = charSet
         self.SQRT = SQRT
+        self.LFont = ("fixed", "26")
+        self.SFont = ("fixed", "10")
         self.labelList = []
         self.initWhitelist = []
         for itemIndex, item in enumerate(gridBox):
-            x = (itemIndex%SQRT) * SQRT
-            y = (itemIndex//SQRT) * SQRT
+            x = itemIndex%SQRT
+            y = itemIndex//SQRT
+            labelContainer = tk.Frame(self, width=74, height=74)
+            labelContainer.pack_propagate(False)
             if item != '0':
-                tempLabel = tk.Label(self, text=item, fg='blue', width=4, height=2, font=("Helvetica", "20"))
-                tempLabel.grid(row=y, column=x, rowspan=SQRT, columnspan=SQRT, padx=1, pady=1)
+                tempLabel = tk.Label(labelContainer, text=item, fg='blue', font=self.LFont)
+                #self.updatePadding(tempLabel)
+                tempLabel.pack(fill='both', pady=(15, 0))
+                labelContainer.grid(row=y, column=x, padx=1, pady=1)
                 self.labelList.append(tempLabel)
                 self.initWhitelist.append(itemIndex)
                 continue
             textStr = self.buildMarkLabelStr(markBox[itemIndex])
-            tempLabel = tk.Label(self, text=textStr, width=8, height=4, font=("courier", "10"))
-            tempLabel.grid_propagate(False)
+            tempLabel = tk.Label(labelContainer, text=textStr, font=self.SFont)
+            #self.updatePadding(tempLabel)
+            tempLabel.pack(fill='both')
             self.labelList.append(tempLabel)
-            tempLabel.grid(row=y, column=x, rowspan=SQRT, columnspan=SQRT, padx=1, pady=1)
     
     def buildMarkLabelStr(self, targetMarks):
         finStr = str()
@@ -37,10 +46,12 @@ class subGrid(tk.Frame):
         for itemIndex ,(newGrid, oldGrid) in enumerate(zip(gridBox, self.gridCheck)):
             if newGrid == '0':
                 self.labelList[itemIndex].config(text=self.buildMarkLabelStr(markBox[itemIndex]))
+                #self.updatePadding(self.labelList[itemIndex])
                 continue
             if newGrid != oldGrid:
                 colour = 'red' if solveHL == True else 'black'
-                self.labelList[itemIndex].config(text=newGrid, font=("Helvetica", "20"), fg=colour, width=4, height=2)
+                self.labelList[itemIndex].config(text=newGrid, font=self.LFont, fg=colour)
+                #self.updatePadding(self.labelList[itemIndex])
                 continue
             if self.labelList[itemIndex].cget("fg") == 'red': 
                 self.labelList[itemIndex].config(fg='black')
@@ -51,7 +62,10 @@ class subGrid(tk.Frame):
         self.markCheck = markBox
         for itemIndex, newGrid in enumerate(gridBox):
             if newGrid != '0':
-                self.labelList[itemIndex].config(text=newGrid, font=("Helvetica", "20"), fg='blue', width=4, height=2)
+                self.labelList[itemIndex].config(text=newGrid, font=self.LFont, fg='blue')
+                #self.updatePadding(self.labelList[itemIndex])
                 continue
-            self.labelList[itemIndex].config(fg='black', text=self.buildMarkLabelStr(markBox[itemIndex]), width=8, height=4, font=("courier", "10"))
+            self.labelList[itemIndex].config(fg='black', text=self.buildMarkLabelStr(markBox[itemIndex]), font=self.SFont)
+            #self.updatePadding(self.labelList[itemIndex])
+            
             
