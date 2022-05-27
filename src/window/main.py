@@ -4,6 +4,7 @@ import tkinter as tk
 from src.window.lib.grid import mainGrid
 from src.window.lib.logWidget import logWidget
 from src.window.lib.debugWidget import debugWidget
+from src.window.lib.inputGrid import inputGrid
 from src.app.game import sudoku
 from src import LOGDEBUG, __version__, LOGSOLVE
 
@@ -37,19 +38,21 @@ class mainWindow(tk.Tk):
         self.commandFrame = tk.LabelFrame(self, text='Commands')
         
         self.solveButtonsContainer = tk.LabelFrame(self.commandFrame, text='Solving')
-        self.fullSolveButton = tk.Button(self.solveButtonsContainer, text='Solve Full', command=self.runFull)
+        self.fullSolveButton = tk.Button(self.solveButtonsContainer, text='Solve Full', command=self.runFull, state='disabled')
         self.fullSolveButton.grid(row=0, pady=10, padx=10)
-        self.partSolveButton = tk.Button(self.solveButtonsContainer, text='Solve Once', command=self.runOnce)
+        self.partSolveButton = tk.Button(self.solveButtonsContainer, text='Solve Once', command=self.runOnce, state='disabled')
         self.partSolveButton.grid(row=1, pady=10, padx=10)
         self.solveButtonsContainer.grid(row=0, column=0, pady=10, padx=10)
         
         self.inputFrame = tk.LabelFrame(self.commandFrame, text='Input')
+        self.gridInputButton = tk.Button(self.inputFrame, text='Input Grid', command=self.runGridInput)
+        self.gridInputButton.grid(row=0, column=0, padx=10, pady=10)
         exampleGame = '7..3.9..1....5....82..6.....59.....36.2...1.93.....65.....7..94....8....9..1.3..7'
         self.gameStrInput = tk.Entry(self.inputFrame, width=51, font=('Arial', '12'))
         self.gameStrInput.insert(tk.END, exampleGame)
-        self.gameStrInput.grid(row=0, column=0, pady=10, padx=10)
+        self.gameStrInput.grid(row=1, column=0, pady=10, padx=10)
         self.inputStrButton = tk.Button(self.inputFrame, text='Input Str', command=self.insertNewGame)
-        self.inputStrButton.grid(row=0, column=1, pady=10, padx=10)
+        self.inputStrButton.grid(row=1, column=1, pady=10, padx=10)
         self.inputFrame.grid(row=0, column=1, pady=10, padx=10)
         
         self.commandFrame.grid(column=4, row=0)
@@ -73,6 +76,9 @@ class mainWindow(tk.Tk):
     def disableTextBoxes(boxes: list):
         for box in boxes:
             box.configure(state='disabled')
+    
+    def runGridInput(self):
+        gridWindow = inputGrid(self)
     
     def runFull(self):
         self.disableButtons([self.fullSolveButton, self.partSolveButton])
