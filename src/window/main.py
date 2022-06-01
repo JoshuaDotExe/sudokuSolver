@@ -1,4 +1,4 @@
-from doctest import Example
+from pathlib import Path
 import tkinter as tk
 
 from src.window.lib.grid import mainGrid
@@ -15,7 +15,8 @@ class mainWindow(tk.Tk):
         super().__init__()
         
         self.title(f'Sudoku Solver: {__version__}')
-        self.iconbitmap('src/resources/window/icon_32.ico')
+        iconPic = tk.PhotoImage(file=Path('src/resources/window/icon_32.png'))
+        self.tk.call('wm','iconphoto', self._w, iconPic)
         self.resizable(True, True)
         self.state('zoomed')
 
