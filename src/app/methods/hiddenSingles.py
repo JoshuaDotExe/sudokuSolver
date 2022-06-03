@@ -28,7 +28,8 @@ class hiddenSingles:
                     self.grid[yCoord][xCoord] = target
                     LOGSOLVE.info(f"HIDDEN SINGLE (vert)| Space ({xCoord},{yCoord}) is a {target}")
                     self.turnMoves += 1
-        self.removeBasicMarks()
+                    self.updateMSS(target, xCoord, yCoord)
+        
     
     @staticmethod
     def __hiddenSinglesHorizontal(self: base, yCoord : int):
@@ -44,7 +45,7 @@ class hiddenSingles:
                     self.grid[yCoord][xCoord] = target
                     LOGSOLVE.info(f"HIDDEN SINGLE (horz) | Space ({xCoord},{yCoord}) is a {target}")
                     self.turnMoves += 1
-        self.removeBasicMarks()
+                    self.updateMSS(target, xCoord, yCoord)
     
     @staticmethod
     def __hiddenSinglesBox(self: base, xCoord : int, yCoord : int):
@@ -62,4 +63,4 @@ class hiddenSingles:
                     self.grid[tempY][tempX] = target
                     LOGSOLVE.info(f"HIDDEN SINGLE (box) | Space ({tempX},{tempY}) is a {target}")
                     self.turnMoves += 1
-        self.removeBasicMarks()
+                    self.updateMSS(target, tempX, tempY)

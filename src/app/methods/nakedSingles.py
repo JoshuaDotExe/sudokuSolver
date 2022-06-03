@@ -11,4 +11,4 @@ class nakedSingles:
                     self.grid[yCoord][xCoord] = item[0]
                     self.turnMoves += 1
                     LOGSOLVE.info(f"LONE SINGLE | Space ({xCoord},{yCoord}) is a {item[0]}")
-        self.removeBasicMarks()
+                    self.updateMSS(item[0], xCoord, yCoord)
