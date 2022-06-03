@@ -97,8 +97,10 @@ class base(markings):
         for yCoord, row in enumerate(self.grid):
             for xCoord, item in enumerate(row):
                 if item != '0':
-                    self.removeMarkBox(item, xCoord, yCoord)
-                    self.removeMarkHorizontal(item, yCoord)
-                    self.removeMarkVertical(item, xCoord)
-                    self.marks[yCoord][xCoord] = []
+                    self.updateMSS(item, xCoord, yCoord)
     
+    def updateMSS(self, target, xCoord, yCoord):
+        self.removeMarkBox(target, xCoord, yCoord)
+        self.removeMarkHorizontal(target, yCoord)
+        self.removeMarkVertical(target, xCoord)
+        self.marks[yCoord][xCoord] = []
